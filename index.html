@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080807">
+<title>时之洄游 · THE TIME MIGRATOR | 综合模型交互档案</title>
+<meta name="description" content="《时之洄游》综合模型的交互式结构档案：多角度环视、热点节点、部件分组、材料细节与制作时间轴。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080707'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23c47b4c' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%23efe9dd'/%3E%3C/svg%3E">
+<link rel="preload" as="image" href="assets/img/plates/front.webp">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="page-grain" aria-hidden="true"></div>
+<div class="page-rule" aria-hidden="true"></div>
+
+<header class="site-head">
+  <a class="brand" href="#top" aria-label="时之洄游首页">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="1"/>
+        <circle cx="24" cy="24" r="3" fill="#c47b4c"/>
+        <path d="M24 1v8M24 39v8M1 24h8M39 24h8" stroke="currentColor" stroke-width="1"/>
+      </svg>
+    </span>
+    <span class="brand-type"><strong>时之洄游</strong><small>THE TIME MIGRATOR</small></span>
+  </a>
+  <nav class="site-nav" aria-label="页面导航">
+    <a href="#model">模型 <span>01</span></a>
+    <a href="#parts">部件 <span>02</span></a>
+    <a href="#notes">留言 <span>03</span></a>
+  </nav>
+  <div class="head-meta"><span>05 / RECOMBINATION</span><span>2026</span></div>
+</header>
+
+<main id="top">
+
+  <section class="hero" id="model">
+    <div class="hero-head">
+      <div class="eyebrow"><span class="copper">INTERACTIVE OBJECT</span><span>05 / 综合模型</span></div>
+      <p class="hero-side-note">拖拽环视 / 5 个机位 / 8 个结构节点</p>
+    </div>
+
+    <div class="workbench">
+      <div class="viewer-col">
+        <div class="viewer" id="viewer">
+          <div class="viewer-top">
+            <span class="viewer-mode" id="viewModeLabel">INSPECT / 正面</span>
+            <span class="viewer-count" id="viewCount">01 / 12</span>
+          </div>
+
+          <div class="stage" id="stage" aria-label="综合模型多角度观察区">
+            <div class="plane" id="plane">
+              <img class="layer is-current" id="layerA" src="assets/img/plates/front.webp" alt="《时之洄游》综合模型正面" draggable="false">
+              <img class="layer" id="layerB" alt="" aria-hidden="true" draggable="false">
+              <div class="hotspots" id="hotspots"></div>
+            </div>
+            <div class="stage-loader" id="stageLoader"><span>LOADING VIEWS</span><i><b id="loadProgress"></b></i></div>
+            <div class="stage-corner tl" aria-hidden="true"></div>
+            <div class="stage-corner tr" aria-hidden="true"></div>
+            <div class="stage-corner bl" aria-hidden="true"></div>
+            <div class="stage-corner br" aria-hidden="true"></div>
+          </div>
+
+          <div class="viewer-bar">
+            <div class="interaction-hint"><span class="hint-mark" aria-hidden="true"></span><span>拖拽环视</span><span>滚轮缩放</span><span>右键平移</span></div>
+            <div class="viewer-tools">
+              <button type="button" id="autoBtn" class="text-btn" aria-pressed="false"><span class="status-dot"></span>AUTO ORBIT</button>
+              <button type="button" id="fullBtn" class="icon-btn" aria-label="全屏查看" title="全屏">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M21 15v6h-6" stroke="currentColor" stroke-width="1.2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="view-rail" id="viewRail" aria-label="环视角度"></div>
+
+          <div class="zoom-bar" aria-label="缩放控制">
+            <button type="button" id="zoomOut" aria-label="缩小">−</button>
+            <span id="zoomLevel">100%</span>
+            <button type="button" id="zoomIn" aria-label="放大">+</button>
+            <button type="button" id="resetBtn" class="zoom-reset" aria-label="复位视角">RESET</button>
+          </div>
+        </div>
+
+        <div class="control-strip">
+          <span class="control-label">机位 / VIEW</span>
+          <div class="preset-row" id="presetRow" role="group" aria-label="预设机位">
+            <button type="button" data-preset="front" class="is-active"><span>正面</span><small>FRONT</small></button>
+            <button type="button" data-preset="side"><span>侧面</span><small>SIDE</small></button>
+            <button type="button" data-preset="head"><span>头部</span><small>HEAD</small></button>
+            <button type="button" data-preset="pipe"><span>管路关节</span><small>PIPE</small></button>
+            <button type="button" data-preset="base"><span>底部支撑</span><small>BASE</small></button>
+          </div>
+          <button type="button" class="orbit-link" id="randomNode">随机节点 <span>↻</span></button>
+          <button type="button" class="orbit-link" id="orbitBtn">自由环视 <span>↗</span></button>
+        </div>
+
+        <div class="control-strip group-strip">
+          <span class="control-label">部件 / LAYERS</span>
+          <div class="group-row" id="groupRow" role="group" aria-label="部件分组">
+            <button type="button" data-group="all" class="is-active"><span>总装</span><small>ALL</small></button>
+            <button type="button" data-group="skeleton"><span>骨架</span><small>FRAME</small></button>
+            <button type="button" data-group="pipes"><span>管线</span><small>PIPES</small></button>
+            <button type="button" data-group="parts"><span>零件模块</span><small>MODULES</small></button>
+            <button type="button" data-group="soft"><span>软性材料</span><small>FLEX</small></button>
+          </div>
+          <span class="group-note">按类别归档</span>
+        </div>
+      </div>
+
+      <aside class="info-col" aria-label="模型说明">
+        <div class="eyebrow"><span class="copper">RECOMBINATION</span><span>NO. 05</span></div>
+        <h1>时之洄游</h1>
+        <p class="title-en">THE TIME MIGRATOR / 2026</p>
+        <p class="lead">五件旧物在同一台机器上重新获得功能。相机的凝视、渔轮的牵引、手柄的控制、玩具枪的推进与网袋的缠绕，被固定在四十八层白色层积地形上。</p>
+        <p class="lead lead-secondary">它不是被修复的物件，而是一台由接口、缠绕与重量临时组织起来的时间机器。</p>
+
+        <div class="info-card" id="infoCard" aria-live="polite">
+          <div class="info-kicker" id="infoKicker">VIEW / FRONT</div>
+          <h2 id="infoTitle">正面</h2>
+          <p class="info-en" id="infoEn">FRONT / ANNOTATED VIEW</p>
+          <p class="info-desc" id="infoDesc">机器以圆形观测口面对观看者。白色环体、铜管与彩色零件在这一面汇聚；点击热点，读取构件的材料与连接方式。</p>
+          <dl class="info-meta" id="infoMeta">
+            <div><dt>视角</dt><dd>正面 / FRONT</dd></div>
+            <div><dt>节点</dt><dd>5 NODES / 5 OBJECTS</dd></div>
+          </dl>
+          <button type="button" class="info-image-btn" id="infoImageBtn" aria-label="查看当前图像大图">
+            <img id="infoImage" src="assets/img/plates/front.webp" alt="正面视图">
+            <span class="info-image-cap" id="infoImageCap">PLATE 05 / FRONT</span>
+          </button>
+          <div class="info-foot" id="infoFoot"><span class="copper">点击模型热点</span><span>点击图像放大</span></div>
+        </div>
+
+        <div class="material-block">
+          <span class="material-label">MATERIAL LANGUAGE</span>
+          <p>白色层积纸板 · 旧相机 · 渔轮 · 游戏手柄 · 玩具枪 · 铜管 · 电线 · 麻绳 · 渔网 · 螺丝与扎带</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section evidence" id="parts">
+    <div class="section-head">
+      <span class="section-index">02</span>
+      <div><p class="section-kicker">MATERIAL EVIDENCE</p><h2>部件档案</h2></div>
+      <p class="section-note">按骨架、管线、零件、软性材料四类重新整理。<br>零件只作为零件被观看；悬停高亮，点击放大。</p>
+    </div>
+
+    <div class="category-block">
+      <div class="category-head">
+        <span class="cat-index">01</span>
+        <div class="cat-title"><p class="cat-kicker">FRAME / STRUCTURE</p><h3>骨架与支撑</h3></div>
+        <p class="cat-note">白色环体、金属支架与 48 层纸板。承力结构不隐藏在内部，它直接构成机器的外轮廓。</p>
+      </div>
+      <div class="category-cards">
+        <button type="button" class="evidence-card" data-part="ring" data-full="assets/img/gallery/frame.webp" data-title="骨架 / FRAME" data-caption="白色承力结构 / 螺栓、铜线与手工接合">
+          <span class="card-index">F-01</span>
+          <img src="assets/img/gallery/frame.webp" alt="白色承力骨架" loading="lazy">
+          <span class="card-copy"><strong>骨架 / FRAME</strong><small>白色环体 · 金属支架</small></span>
+        </button>
+        <button type="button" class="evidence-card" data-part="ring" data-full="assets/img/gallery/ring.webp" data-title="环体 / RING" data-caption="环状骨架与铜管 / 2026">
+          <span class="card-index">F-02</span>
+          <img src="assets/img/gallery/ring.webp" alt="白色环体与铜管" loading="lazy">
+          <span class="card-copy"><strong>环体 / RING</strong><small>铜管 · 螺栓 · 扎带</small></span>
+        </button>
+        <button type="button" class="evidence-card" data-part="stage" data-full="assets/img/gallery/base.webp" data-title="48层曲面 / BASE" data-caption="48层白色纸板 / 层叠胶合与切割">
+          <span class="card-index">F-03</span>
+          <img src="assets/img/gallery/base.webp" alt="48层白色层积底座" loading="lazy">
+          <span class="card-copy"><strong>48层曲面 / BASE</strong><small>纸板 · 层叠胶合</small></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="category-block">
+      <div class="category-head">
+        <span class="cat-index">02</span>
+        <div class="cat-title"><p class="cat-kicker">PIPEWORK / CONNECTIONS</p><h3>管线与连接</h3></div>
+        <p class="cat-note">铜管、白色软管、编织线与插头。只保留管线与连接本身，按 R-01—R-03 读取接口走向。</p>
+      </div>
+
+      <div class="pipeline-layout">
+        <figure class="pipeline-visual">
+          <img id="pipelineImage" src="assets/img/pipeline/network.webp" alt="综合模型的管线与连接网络" loading="lazy">
+          <div class="pipeline-frame">
+            <span>PIPE ROUTE / 03 CONNECTIONS</span>
+            <span>R-01 — R-03</span>
+          </div>
+          <figcaption>
+            <span class="pipeline-cap-index" id="pipelineCapIndex">R-00 / NETWORK</span>
+            <p id="pipelineCapText">铜管从环体内部穿出，白色软管与编织线沿曲面底座延伸。所有连接都暴露在表面。</p>
+          </figcaption>
+        </figure>
+
+        <div class="pipeline-side">
+          <p class="pipeline-lead">管线不是隐藏的线路，而是机器的外轮廓。沿着铜管、插头和编织线，可以读出零件的受力与连接顺序。</p>
+          <div class="pipeline-list" id="pipelineList">
+            <button type="button" class="pipe-item is-active" data-pipe="copper"
+              data-image="assets/img/pipeline/copper.webp"
+              data-index="R-01 / COPPER"
+              data-text="铜管与波纹软管从白色环体穿出，以插入、缠绕与扎带固定。刚性铜管负责定型，软管负责转向。">
+              <span class="pipe-num">01</span>
+              <span class="pipe-copy"><strong>铜管 / COPPER</strong><small>插入 · 缠绕 · 扎带</small></span>
+              <span class="pipe-thumb"><img src="assets/img/pipeline/copper.webp" alt="铜管与波纹软管" loading="lazy"></span>
+            </button>
+            <button type="button" class="pipe-item" data-pipe="connector"
+              data-image="assets/img/pipeline/connector.webp"
+              data-index="R-02 / CONNECTOR"
+              data-text="白色插头与螺旋线把旧相机的电信号接出。接口没有隐藏，铜线、热缩管与插接痕迹都留在表面。">
+              <span class="pipe-num">02</span>
+              <span class="pipe-copy"><strong>插头 / CONNECTOR</strong><small>插接 · 热缩管 · 螺旋线</small></span>
+              <span class="pipe-thumb"><img src="assets/img/pipeline/connector.webp" alt="白色插头" loading="lazy"></span>
+            </button>
+            <button type="button" class="pipe-item" data-pipe="cable"
+              data-image="assets/img/pipeline/cable.webp"
+              data-index="R-03 / CABLE"
+              data-text="螺旋线与编织线把分散的接口串成一条可读的路径。它们被白线缠绕，又被扎带固定在环体边缘。">
+              <span class="pipe-num">03</span>
+              <span class="pipe-copy"><strong>编织线 / CABLE</strong><small>螺旋 · 绑扎 · 固定</small></span>
+              <span class="pipe-thumb"><img src="assets/img/pipeline/cable.webp" alt="螺旋编织线" loading="lazy"></span>
+            </button>
+          </div>
+          <div class="pipeline-readout">
+            <span class="pipeline-readout-kicker">PIPE ROUTE / 可见连接</span>
+            <p>点选 R-01—R-03，读取每一段管路与接口的材料和连接方式。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-block">
+      <div class="category-head">
+        <span class="cat-index">03</span>
+        <div class="cat-title"><p class="cat-kicker">MODULES / PARTS</p><h3>零件模块</h3></div>
+        <p class="cat-note">拆到零件层级的摄像头、照相机、手柄、玩具枪与钓具。这里只展示零件本身，不混入整机模型或软性材料。</p>
+      </div>
+      <div class="category-cards category-cards--parts">
+        <button type="button" class="evidence-card" data-part="camera" data-full="assets/img/gallery/camera-parts.webp" data-title="摄像头零件 / CAMERA" data-caption="摄像头拆解件 / 外壳、镜头、电路">
+          <span class="card-index">M-01</span>
+          <img src="assets/img/gallery/camera-parts.webp" alt="拆解的摄像头零件" loading="lazy">
+          <span class="card-copy"><strong>摄像头零件 / CAMERA</strong><small>外壳 · 镜头 · 电路</small></span>
+        </button>
+        <button type="button" class="evidence-card" data-part="camera" data-full="assets/img/gallery/still-camera-parts.webp" data-title="照相机零件 / CAMERA" data-caption="照相机拆解件 / 机身、快门、电路">
+          <span class="card-index">M-02</span>
+          <img src="assets/img/gallery/still-camera-parts.webp" alt="拆解的照相机零件" loading="lazy">
+          <span class="card-copy"><strong>照相机零件 / CAMERA</strong><small>机身 · 快门 · 电路</small></span>
+        </button>
+        <button type="button" class="evidence-card" data-part="controller" data-full="assets/img/gallery/controller-parts.webp" data-title="手柄零件 / CONTROLLER" data-caption="手柄拆解件 / 按键、摇杆、外壳">
+          <span class="card-index">M-03</span>
+          <img src="assets/img/gallery/controller-parts.webp" alt="拆解的游戏手柄零件" loading="lazy">
+          <span class="card-copy"><strong>手柄零件 / CONTROLLER</strong><small>按键 · 摇杆 · 外壳</small></span>
+        </button>
+        <button type="button" class="evidence-card" data-part="nozzle" data-full="assets/img/gallery/gun-parts.webp" data-title="枪械零件 / NOZZLE" data-caption="玩具枪拆解件 / 枪管、弹簧、卡扣">
+          <span class="card-index">M-04</span>
+          <img src="assets/img/gallery/gun-parts.webp" alt="拆解的玩具枪零件" loading="lazy">
+          <span class="card-copy"><strong>枪械零件 / NOZZLE</strong><small>枪管 · 弹簧 · 卡扣</small></span>
+        </button>
+        <button type="button" class="evidence-card" data-part="reel" data-full="assets/img/gallery/reel-parts.webp" data-title="钓具零件 / FISHING" data-caption="钓竿与渔轮拆解件 / 竿节、导线环、线杯、摇臂">
+          <span class="card-index">M-05</span>
+          <img src="assets/img/gallery/reel-parts.webp" alt="拆解的钓竿与渔轮零件" loading="lazy">
+          <span class="card-copy"><strong>钓具零件 / FISHING</strong><small>竿节 · 导线环 · 线杯</small></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="category-block">
+      <div class="category-head">
+        <span class="cat-index">04</span>
+        <div class="cat-title"><p class="cat-kicker">FLEXIBLE / BINDING</p><h3>软性材料</h3></div>
+        <p class="cat-note">渔网、网袋、麻绳。它们不承重，负责打结、垂坠和缠绕，把分散的硬质零件重新绑成一个整体。</p>
+      </div>
+
+      <div class="soft-layout">
+        <figure class="soft-feature">
+          <img src="assets/img/soft/net.webp" alt="渔网从白色底座垂落" loading="lazy">
+          <div class="soft-overlay">
+            <span class="soft-feature-index">S-01 / NET</span>
+            <p>网目在白色地形上展开，重量把柔软的网拉成一条向下的线。</p>
+            <span class="soft-tags">渔网 · 垂坠 · 打结</span>
+          </div>
+        </figure>
+        <div class="soft-side">
+          <p class="soft-quote">软性材料不承重。<br>它负责把时间打结。</p>
+          <div class="soft-pair">
+            <figure class="soft-tile soft-tile-dark">
+              <img src="assets/img/soft/rope.webp" alt="麻绳在白色底座上的缠绕" loading="lazy">
+              <figcaption><span>02 / ROPE</span><span>麻绳 · 缠绕 · 绑扎</span></figcaption>
+            </figure>
+            <figure class="soft-tile soft-tile-paper">
+              <img src="assets/img/soft/bag.webp" alt="渔网袋与麻绳提手" loading="lazy">
+              <figcaption><span>03 / BAG</span><span>渔网袋 · 打结 · 提手</span></figcaption>
+            </figure>
+          </div>
+          <p class="soft-note">渔网袋、麻绳与网目从机器上垂落，软性材料把硬质零件之间的空隙连接起来。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section notes" id="notes">
+    <div class="section-head">
+      <span class="section-index">03</span>
+      <div><p class="section-kicker">RATE THE OBJECT</p><h2>匿名留言</h2></div>
+      <p class="section-note">为模型打分 · 匿名留言 · 随机阅读<br>五颗星，留给这台时间机器。</p>
+    </div>
+
+    <div class="notes-layout">
+      <div class="notes-side">
+        <p class="notes-lead">给这台模型一个分数，再留下一句话。这里不需要登录，也不需要署名。</p>
+        <div class="notes-score">
+          <span class="score-value" id="averageRating">—</span>
+          <span class="score-den">/ 5</span>
+          <div class="score-info">
+            <div class="score-stars" id="averageStars" aria-label="平均评分"></div>
+            <span class="score-count"><span id="notesCount">0</span> 条留言</span>
+          </div>
+        </div>
+        <div class="notes-status" id="notesStatus"><i></i><span>正在读取留言…</span></div>
+        <div class="notes-config-note" id="notesConfigNote">本地预览 · 连接公开留言服务后，留言才会对所有访客显示。</div>
+        <p class="notes-privacy">评分与留言会公开显示，请勿填写真实姓名、电话或其他隐私信息。不合适的内容可以在后台隐藏。</p>
+      </div>
+
+      <form class="note-form" id="noteForm" novalidate>
+        <div class="note-form-head"><span>RATE THE OBJECT</span><span>03 / PUBLIC</span></div>
+        <div class="rating-field">
+          <span class="rating-label">评分 / RATING</span>
+          <div class="star-input" id="starInput" role="radiogroup" aria-label="给模型评分">
+            <button type="button" class="star-btn" data-rating="1" role="radio" aria-checked="false" aria-label="1 星">★</button>
+            <button type="button" class="star-btn" data-rating="2" role="radio" aria-checked="false" aria-label="2 星">★</button>
+            <button type="button" class="star-btn" data-rating="3" role="radio" aria-checked="false" aria-label="3 星">★</button>
+            <button type="button" class="star-btn" data-rating="4" role="radio" aria-checked="false" aria-label="4 星">★</button>
+            <button type="button" class="star-btn" data-rating="5" role="radio" aria-checked="false" aria-label="5 星">★</button>
+          </div>
+          <span class="rating-value" id="ratingValue">未评分</span>
+        </div>
+        <div class="note-form-grid">
+          <label class="note-field">
+            <span>署名 / NAME</span>
+            <input id="noteName" type="text" maxlength="16" placeholder="匿名" autocomplete="nickname">
+          </label>
+          <span class="note-counter" id="noteCounter">0 / 120</span>
+        </div>
+        <label class="note-field note-message">
+          <span>留言 / MESSAGE</span>
+          <textarea id="noteContent" maxlength="120" rows="3" placeholder="对这台模型说一句话…"></textarea>
+        </label>
+        <input class="note-honey" id="noteHoney" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="note-actions">
+          <span class="note-form-status" id="noteFormStatus">匿名公开 · 评分为 1–5 星</span>
+          <button class="note-submit" id="noteSubmit" type="submit">提交评分 <span>→</span></button>
+        </div>
+      </form>
+    </div>
+
+    <div class="notes-feed-block">
+      <div class="notes-feed-head">
+        <div class="notes-feed-title"><span class="copper">PUBLIC NOTES</span><span>公开留言</span></div>
+        <div class="note-feed-tools">
+          <button type="button" class="note-tool" id="randomNote">随机读一条 <span>↻</span></button>
+          <button type="button" class="note-tool" id="noteRefresh" aria-label="刷新留言">刷新 <span>↻</span></button>
+        </div>
+      </div>
+      <div class="notes-list" id="notesList">
+        <div class="notes-empty">尚未读取留言。</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <div><span class="foot-mark">时之洄游</span><span>THE TIME MIGRATOR</span></div>
+    <div class="foot-meta"><span>吴天浩 / 2026227093</span><span>环境设计 / 2026</span><span>综合模型 05</span></div>
+    <a href="#top" class="back-top">BACK TO TOP ↑</a>
+  </footer>
+</main>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图像预览" aria-hidden="true">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="关闭大图">CLOSE <span>×</span></button>
+  <figure>
+    <img id="lightboxImage" src="assets/img/plates/front.webp" alt="">
+    <figcaption><span id="lightboxTitle">图像</span><span id="lightboxCaption"></span></figcaption>
+  </figure>
+</div>
+
+<noscript><div class="noscript">请启用 JavaScript 以使用模型环视与结构节点。</div></noscript>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
